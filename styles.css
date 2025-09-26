@@ -327,7 +327,7 @@ ul {
 
 /* --- FEATURED/PRODUCT GRID --- */
 #featured-collections {
-    padding-top: 0;
+    /* padding-top: 0; */
 }
 
 .product-card {
@@ -728,11 +728,9 @@ ul {
     font-size: 1.1rem;
 }
 
-#contact-form-button{
-    &:disabled{
+#contact-form-button:disabled{
         background-color: red;
     }
-}
 
 .map-container {
     height: 300px;
