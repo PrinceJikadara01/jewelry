@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Aethelred</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="toast-notification" class="toast-notification" role="alert"></div>
+
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">Aethelred</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="/" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="/products" class="nav-link">Products</a></li>
+                <li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="/owner" class="nav-link active">Admin</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="owner-section" class="owner-section section">
+            <div class="container">
+
+                <!-- Auth Container -->
+                <div id="auth-container" class="auth-container">
+                    <!-- Signup Form -->
+                    <form id="signup-form" class="auth-form is-hidden">
+                        <h2>Create Admin Account</h2>
+                        <p>This is a one-time setup. This account will be used to manage your store.</p>
+                        <div class="form-group">
+                            <label for="signup-email">Email</label>
+                            <input type="email" id="signup-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-password">Password</label>
+                            <input type="password" id="signup-password" required minlength="8">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </form>
+
+                    <!-- Login Form -->
+                    <form id="login-form" class="auth-form is-hidden">
+                        <h2>Admin Login</h2>
+                        <div class="form-group">
+                            <label for="login-username">Username</label>
+                            <input type="text" id="login-username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+
+                <!-- Admin Panel -->
+                <div id="admin-panel" class="admin-panel is-hidden">
+                    <div class="admin-header">
+                        <h2>Admin Dashboard</h2>
+                        <button id="logout-btn" class="btn btn-secondary">Logout</button>
+                    </div>
+
+                    <!-- Add/Edit Product Form -->
+                    <div class="card">
+                        <h3 id="form-title">Add New Product</h3>
+                        <form id="product-form">
+                            <input type="hidden" id="product-id">
+                            <div class="form-group">
+                                <label for="product-name">Product Name</label>
+                                <input type="text" id="product-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-category">Category</label>
+                                <input type="text" id="product-category" required placeholder="e.g., Rings, Necklaces">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-price">Price (₹)</label>
+                                <input type="number" id="product-price" required min="0" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-image">Product Image</label>
+                                <input type="file" id="product-image" name="image" accept="image/*">
+                                <img id="image-preview" src="" alt="Image Preview" style="max-width: 100px; display: none; margin-top: 10px;">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-description">Description</label>
+                                <textarea id="product-description" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-featured">Featured Product</label>
+                                <input type="checkbox" id="product-featured">
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" class="btn btn-primary">Save Product</button>
+                                <button type="button" id="cancel-edit-btn" class="btn btn-secondary is-hidden">Cancel Edit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Product List -->
+                    <div class="card">
+                        <h3>Manage Products</h3>
+                        <div class="product-controls">
+                            <input type="text" id="product-search" placeholder="Search products by name..." class="form-control">
+                            <select id="category-filter" class="form-control">
+                                <option value="all">All Categories</option>
+                                <!-- Categories will be dynamically loaded here -->
+                            </select>
+                        </div>
+                        <div class="import-export-buttons">
+                            <button id="import-btn" class="btn btn-secondary">Import JSON</button>
+                            <input type="file" id="import-file" accept=".json" class="is-hidden">
+                            <button id="export-btn" class="btn btn-secondary">Export JSON</button>
+                        </div>
+                        <div class="product-list-container">
+                            <table id="product-list">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Product rows will be dynamically inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination-controls">
+                            <button id="prev-page" class="btn btn-secondary" disabled>Previous</button>
+                            <span id="page-info">Page 1 of 1</span>
+                            <button id="next-page" class="btn btn-secondary" disabled>Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Quick View Modal (Required by app.js for global script consistency) -->
+    <div id="quick-view-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <div id="modal-body" class="modal-body-content"></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Aethelred. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/owner.js"></script>
+    <script src="js/app.js"></script> <!-- For navbar functionality, etc. -->
+</body>
+</html>
