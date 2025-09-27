@@ -660,7 +660,7 @@ ul {
 
 /* --- PRODUCT DETAIL PAGE --- */
 #product-detail-section {
-    padding-top: 60px;
+    padding-top: 120px;
     padding-bottom: 60px;
 }
 
@@ -1041,6 +1041,10 @@ input[type="file"]::file-selector-button:hover {
         gap: 40px;
     }
 
+    .page-header h1 {
+        font-size: 3rem;
+    }
+
     .product-detail-info h1 {
         font-size: 2.5rem;
     }
@@ -1057,6 +1061,10 @@ input[type="file"]::file-selector-button:hover {
 
     .section-title {
         font-size: 2.2rem;
+    }
+
+    .page-header {
+        padding: 100px 0 30px;
     }
 
     .hero-slider-section {
@@ -1256,6 +1264,27 @@ input[type="file"]::file-selector-button:hover {
 
     .product-price {
         font-size: 1rem;
+    }
+
+    .page-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .product-detail-info h1 {
+        font-size: 2rem;
+    }
+
+    .admin-header h2,
+    .modal-details h2 {
+        font-size: 2rem;
+    }
+
+    .card h3 {
+        font-size: 1.5rem;
+    }
+
+    .footer-column h3 {
+        font-size: 1.3rem;
     }
 }
 
