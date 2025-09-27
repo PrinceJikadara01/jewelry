@@ -392,7 +392,7 @@ ul {
 
 .product-info {
     padding: 20px;
-    text-align: center;
+    text-align: left;
 }
 
 .product-category {
@@ -1119,8 +1119,12 @@ input[type="file"]::file-selector-button:hover {
     .product-overlay .btn {
         opacity: 1;
         transform: translateY(0);
-        padding: 2px 5px;
-        font-size: 0.4rem;
+        width: 135px;
+        height: 35px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .product-card:hover .product-image {
