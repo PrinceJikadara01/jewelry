@@ -331,10 +331,10 @@ ul {
 }
 
 .product-card {
-    background: var(--white-color);
+    background: transparent;
     border-radius: 5px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    box-shadow: none;
     transition: transform var(--transition-speed), box-shadow var(--transition-speed);
     position: relative;
     cursor: pointer;
@@ -342,7 +342,6 @@ ul {
 
 .product-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 .product-image-container {
@@ -413,7 +412,7 @@ ul {
 .product-price {
     font-size: 1.1rem;
     color: var(--gold-color);
-    font-weight: 500;
+    font-weight: 700;
 }
 
 /* --- FILTERS --- */
@@ -1096,8 +1095,11 @@ input[type="file"]::file-selector-button:hover {
         transform: translateY(-8px) rotate(-45deg);
     }
 
-    .grid-two-columns, .grid-three-columns, .grid-four-columns {
+    .grid-two-columns, .grid-four-columns {
         grid-template-columns: 1fr;
+    }
+    .grid-three-columns {
+        grid-template-columns: 1fr 1fr;
     }
     .about-us-image { order: -1; }
     .filters { flex-direction: column; align-items: stretch; }
@@ -1125,11 +1127,7 @@ input[type="file"]::file-selector-button:hover {
     }
 }
 
-.product-image-container {
-    position: relative;
-    overflow: hidden;
-}
-
+/* --- WISHLIST ICON --- */
 .wishlist-icon {
     position: absolute;
     top: 15px;
@@ -1155,10 +1153,4 @@ input[type="file"]::file-selector-button:hover {
 .wishlist-icon.wishlisted svg {
     stroke: #D44950;
     fill: #D44950;
-}
-
-.product-image {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
 }
