@@ -1118,12 +1118,25 @@ input[type="file"]::file-selector-button:hover {
     .product-overlay .btn {
         opacity: 1;
         transform: translateY(0);
-        padding: 8px 18px;
-        font-size: 0.8rem;
+        padding: 6px 14px;
+        font-size: 0.7rem;
     }
 
     .product-card:hover .product-image {
         transform: none;
+    }
+
+    .product-image {
+        height: 175px;
+        width: 175px;
+    }
+
+    .product-name {
+        font-size: 1.2rem;
+    }
+
+    .product-price {
+        font-size: 1rem;
     }
 }
 
