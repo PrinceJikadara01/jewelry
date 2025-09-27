@@ -131,7 +131,7 @@ ul {
     background-color: transparent;
     color: var(--gold-color);
     border-color: var(--gold-color);
-    margin-top: 40px;
+    margin-top: 15px;
 }
 
 .btn-secondary:hover {
@@ -250,14 +250,14 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: transparent;
+    background-color: rgba(0,0,0,0.2);
     z-index: 1;
 }
 
 .hero-content {
     position: relative;
     z-index: 2;
-    text-shadow: 0px 1px 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 0px 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .hero-content h1 {
@@ -275,12 +275,12 @@ ul {
 
 /* Custom pagination for hero slider */
 .hero-pagination.swiper-pagination-bullets {
-    bottom: 15px !important; /* Move dots lower */
+    bottom: 25px !important;
 }
 
 .hero-pagination .swiper-pagination-bullet {
-    background: var(--gold-color);
-    opacity: 0.6;
+    background: var(--white-color);
+    opacity: 0.7;
     width: 10px;
     height: 10px;
     transition: all var(--transition-speed);
@@ -289,7 +289,7 @@ ul {
 .hero-pagination .swiper-pagination-bullet-active {
     background: var(--gold-color);
     opacity: 1;
-    width: 25px;
+    width: 30px;
     border-radius: 5px;
 }
 
@@ -350,49 +350,46 @@ ul {
     overflow: hidden;
 }
 
+.wishlist-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.wishlist-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--dark-color);
+    stroke-width: 1.5;
+    fill: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.wishlist-icon:hover svg {
+    transform: scale(1.1);
+    stroke: var(--gold-color);
+}
+
+.wishlist-icon.wishlisted svg {
+    stroke: #D44950;
+    fill: #D44950;
+}
+
 .product-image {
     width: 100%;
     height: 300px;
     object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.product-card:hover .product-image {
-    transform: scale(1.1);
-}
-
-.product-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity var(--transition-speed);
-}
-
-.product-card:hover .product-overlay {
-    opacity: 1;
-}
-
-.product-overlay .btn {
-    transform: translateY(20px);
-    opacity: 0;
-    transition: all var(--transition-speed) 0.2s;
-}
-
-.product-card:hover .product-overlay .btn {
-    transform: translateY(0);
-    opacity: 1;
 }
 
 .product-info {
     padding: 20px;
     text-align: center;
+}
+
+.product-info .btn-secondary {
+    margin-top: 15px;
 }
 
 .product-category {
@@ -408,12 +405,15 @@ ul {
     font-weight: 600;
     color: var(--dark-color);
     margin: 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .product-price {
     font-size: 1.1rem;
     color: var(--gold-color);
-    font-weight: 500;
+    font-weight: 700; /* Bolder price */
 }
 
 /* --- FILTERS --- */
@@ -1096,9 +1096,14 @@ input[type="file"]::file-selector-button:hover {
         transform: translateY(-8px) rotate(-45deg);
     }
 
-    .grid-two-columns, .grid-three-columns, .grid-four-columns {
+    .grid-two-columns, .grid-four-columns {
         grid-template-columns: 1fr;
     }
+    .grid-three-columns {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px; /* Reduce gap for smaller screens */
+    }
+
     .about-us-image { order: -1; }
     .filters { flex-direction: column; align-items: stretch; }
     .newsletter-form { flex-direction: column; }
@@ -1107,18 +1112,6 @@ input[type="file"]::file-selector-button:hover {
         border-radius: 50px;
     }
     .newsletter-form input { border-right: 1px solid var(--light-gray-color); margin-bottom: 10px; }
-
-    .product-overlay {
-        opacity: 1;
-        background: rgba(0,0,0,0.3);
-    }
-
-    .product-overlay .btn {
-        opacity: 1;
-        transform: translateY(0);
-        padding: 8px 18px;
-        font-size: 0.8rem;
-    }
 
     .product-card:hover .product-image {
         transform: none;
