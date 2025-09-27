@@ -24,6 +24,53 @@ document.addEventListener("DOMContentLoaded", () => {
   const SERVER_URL = ""; // Base URL for server assets
   const OWNER_WHATSAPP_NUMBER = "9875152043"; // <<< IMPORTANT: Replace with the actual WhatsApp number
 
+  // --- WISHLIST MANAGEMENT ---
+  const wishlist = {
+    key: 'userWishlist',
+    
+    // Get the wishlist from localStorage
+    get() {
+      return JSON.parse(localStorage.getItem(this.key)) || [];
+    },
+
+    // Save the wishlist to localStorage
+    save(wishlistArray) {
+      localStorage.setItem(this.key, JSON.stringify(wishlistArray));
+    },
+
+    // Add an item to the wishlist
+    add(productId) {
+      const currentWishlist = this.get();
+      if (!currentWishlist.includes(productId)) {
+        currentWishlist.push(productId);
+        this.save(currentWishlist);
+      }
+    },
+
+    // Remove an item from the wishlist
+    remove(productId) {
+      let currentWishlist = this.get();
+      currentWishlist = currentWishlist.filter(id => id !== productId);
+      this.save(currentWishlist);
+    },
+
+    // Check if an item is in the wishlist
+    contains(productId) {
+      return this.get().includes(productId);
+    },
+
+    // Toggle an item in the wishlist
+    toggle(productId) {
+        if (this.contains(productId)) {
+            this.remove(productId);
+            return false; // Not in wishlist anymore
+        } else {
+            this.add(productId);
+            return true; // Now in wishlist
+        }
+    }
+  };
+
   // --- GENERAL UI & INTERACTIONS ---
 
   const hamburger = document.querySelector(".hamburger");
@@ -166,6 +213,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // --- WISHLIST PAGE ---
+  const wishlistGrid = document.getElementById("wishlist-grid");
+  if (wishlistGrid) {
+    fetchProducts().then(() => {
+      const wishlistedIds = wishlist.get();
+      const wishlistedProducts = allProducts.filter(p => wishlistedIds.includes(p.id));
+      
+      const noItemsMsg = document.getElementById("no-wishlist-items-message");
+
+      if (wishlistedProducts.length > 0) {
+        wishlistGrid.innerHTML = wishlistedProducts.map(p => createProductCard(p)).join('');
+        if (noItemsMsg) noItemsMsg.style.display = 'none';
+      } else {
+        wishlistGrid.innerHTML = '';
+        if (noItemsMsg) noItemsMsg.style.display = 'block';
+      }
+    });
+  }
+
   function displayProducts(products) {
     const grid = document.getElementById("product-grid");
     const noProductsMsg = document.getElementById("no-products-message");
@@ -194,13 +260,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- PRODUCT CARD & MODAL ---
   function createProductCard(product) {
+    const isWishlisted = wishlist.contains(product.id);
     return `
             <div class="product-card" data-id="${product.id}">
                 <div class="product-image-container">
                     <img src="${product.imageurl}" alt="${
       product.name
     }" class="product-image" loading="lazy">
-                    <div class="wishlist-icon">
+                    <div class="wishlist-icon ${isWishlisted ? 'wishlisted' : ''}" data-product-id="${product.id}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </div>
                 </div>
@@ -225,9 +292,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Logic for the wishlist icon
     if (wishlistIcon) {
-      wishlistIcon.classList.toggle('wishlisted');
-      // Here you would typically also add/remove the item from a wishlist array or backend
-      return; // Stop further execution to prevent modal from opening
+      const productId = parseInt(wishlistIcon.dataset.productId, 10);
+      if (!productId) return;
+
+      const isWishlisted = wishlist.toggle(productId);
+      
+      if (isWishlisted) {
+        wishlistIcon.classList.add('wishlisted');
+        showToast('Added to your wishlist!');
+      } else {
+        wishlistIcon.classList.remove('wishlisted');
+        showToast('Removed from your wishlist.');
+      }
+      
+      return; // Stop further execution
     }
 
     // Logic to open the modal
