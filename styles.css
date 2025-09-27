@@ -347,6 +347,7 @@ ul {
 .product-image-container {
     position: relative;
     overflow: hidden;
+    border-radius: 5px;
 }
 
 .product-image {
@@ -1118,8 +1119,8 @@ input[type="file"]::file-selector-button:hover {
     .product-overlay .btn {
         opacity: 1;
         transform: translateY(0);
-        padding: 6px 14px;
-        font-size: 0.7rem;
+        padding: 4px 10px;
+        font-size: 0.6rem;
     }
 
     .product-card:hover .product-image {
