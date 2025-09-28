@@ -8,10 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
       fadeEffect: {
         crossFade: true
       },
-      autoplay: {
+      /* autoplay: {
         delay: 5000,
         disableOnInteraction: false,
-      },
+      }, */
       pagination: {
         el: '.hero-pagination',
         clickable: true,
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Testimonial Slider (remains the same)
-    const testimonials = document.querySelectorAll(".testimonial");
+    /* const testimonials = document.querySelectorAll(".testimonial");
     let currentTestimonial = 0;
     if (testimonials.length > 1) {
       setInterval(() => {
@@ -158,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
         currentTestimonial = (currentTestimonial + 1) % testimonials.length;
         testimonials[currentTestimonial].classList.add("active");
       }, 5000);
-    }
+    } */
   }
 
   // --- PRODUCT PAGE ---
