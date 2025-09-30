@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return `
             <div class="product-card" data-id="${product.id}">
                 <div class="product-image-container">
-                    <img src="${product.imageUrl}" alt="${
+                    <img src="${product.imageurl}" alt="${
       product.name
     }" class="product-image" loading="lazy">
                     <div class="wishlist-icon ${isWishlisted ? 'wishlisted' : ''}" data-product-id="${product.id}">
@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
     )}`;
 
     modalBody.innerHTML = `
-            <img src="${product.imageUrl}" alt="${
+            <img src="${product.imageurl}" alt="${
       product.name
     }" class="modal-image">
             <div class="modal-details">
