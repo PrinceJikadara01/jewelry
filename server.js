@@ -315,6 +315,9 @@ app.get('/owner', (req, res) => {
 app.get('/product', (req, res) => {
     res.sendFile(path.join(__dirname, 'product.html'));
 });
+app.get('/wishlist', (req, res) => {
+    res.sendFile(path.join(__dirname, 'wishlist.html'));
+});
 
 // --- Server Initialization ---
 async function startServer() {

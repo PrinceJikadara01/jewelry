@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch all products from the backend
   async function fetchProducts() {
     try {
-      const response = await fetch(`${API_URL}/products`);
+      const response = await fetch(`${API_URL}/products`, { cache: 'no-cache' });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -193,7 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
       setupPriceFilter();
       displayProducts(allProducts);
       populateCategories(allProducts);
-      handleFilters(); // Initial filter call
     });
 
     productSearch.addEventListener("input", handleFilters);
@@ -207,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function setupPriceFilter() {
         if (allProducts.length === 0) return;
-        const prices = allProducts.map(p => p.price);
+        const prices = allProducts.map(p => Number(p.price));
         const minPrice = Math.min(...prices);
         const maxPrice = Math.max(...prices);
 
