@@ -308,9 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return `
             <div class="product-card" data-id="${product.id}">
                 <div class="product-image-container">
-                    <img src="${product.imageurl}" alt="${
-      product.name
-    }" class="product-image" loading="lazy">
+                    <img src="${product.imageurl}" alt="${product.name}" class="product-image" loading="lazy">
                     <div class="wishlist-icon ${isWishlisted ? 'wishlisted' : ''}" data-product-id="${product.id}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                     </div>
@@ -318,12 +316,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="product-info">
                     <p class="product-category">${product.category}</p>
                     <h3 class="product-name">${product.name}</h3>
-                    <p class="product-price">₹${Number(
-                      product.price
-                    ).toLocaleString()}</p>
-                    <button class="btn btn-secondary quick-view-btn" data-id="${
-                      product.id
-                    }">Quick View</button>
+                    <p class="product-price">₹${Number(product.price).toLocaleString()}</p>
+                    <div class="product-actions">
+                        <button class="btn btn-secondary quick-view-btn" data-id="${product.id}">Quick View</button>
+                    </div>
                 </div>
             </div>
         `;
