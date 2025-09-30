@@ -114,22 +114,22 @@ app.get('/api/products/:id', async (req, res) => {
 
 app.post('/api/products', authenticateToken, upload.single('image'), async (req, res) => {
     const { name, category, price, description, isFeatured } = req.body;
-    // if (!req.file) {
-    //     return res.status(400).json({ message: 'Product image is required.' });
-    // }
+    if (!req.file) {
+        return res.status(400).json({ message: 'Product image is required.' });
+    }
     if (!name || !category || !price) {
         return res.status(400).json({ message: 'Name, category, and price are required.' });
     }
     let imageUrl = '';
-    // try {
-    //     const b64 = Buffer.from(req.file.buffer).toString("base64");
-    //     let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-    //     const cloudinaryResponse = await cloudinary.uploader.upload(dataURI, { folder: "aethelred_products" });
-    //     imageUrl = cloudinaryResponse.secure_url;
-    // } catch (uploadError) {
-    //     console.error('Cloudinary Upload Error:', uploadError);
-    //     return res.status(500).json({ message: 'Error uploading image.', error: uploadError.message });
-    // }
+    try {
+        const b64 = Buffer.from(req.file.buffer).toString("base64");
+        let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+        const cloudinaryResponse = await cloudinary.uploader.upload(dataURI, { folder: "aethelred_products" });
+        imageUrl = cloudinaryResponse.secure_url;
+    } catch (uploadError) {
+        console.error('Cloudinary Upload Error:', uploadError);
+        return res.status(500).json({ message: 'Error uploading image.', error: uploadError.message });
+    }
     const sql = `INSERT INTO products (name, category, price, description, imageUrl, isFeatured) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`;
     const params = [name, category, parseFloat(price), description, imageUrl, isFeatured === 'true'];
     try {
@@ -154,16 +154,16 @@ app.put('/api/products/:id', authenticateToken, upload.single('image'), async (r
         }
         const product = productResult.rows[0];
         let imageUrl = product.imageUrl;
-        // if (req.file) {
-        //     try {
-        //         const b64 = Buffer.from(req.file.buffer).toString("base64");
-        //         let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-        //         const cloudinaryResponse = await cloudinary.uploader.upload(dataURI, { folder: "aethelred_products" });
-        //         imageUrl = cloudinaryResponse.secure_url;
-        //     } catch (uploadError) {
-        //         return res.status(500).json({ message: 'Error uploading new image.', error: uploadError.message });
-        //     }
-        // }
+        if (req.file) {
+            try {
+                const b64 = Buffer.from(req.file.buffer).toString("base64");
+                let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+                const cloudinaryResponse = await cloudinary.uploader.upload(dataURI, { folder: "aethelred_products" });
+                imageUrl = cloudinaryResponse.secure_url;
+            } catch (uploadError) {
+                return res.status(500).json({ message: 'Error uploading new image.', error: uploadError.message });
+            }
+        }
         const sql = `UPDATE products SET name = $1, category = $2, price = $3, description = $4, imageUrl = $5, isFeatured = $6 WHERE id = $7`;
         const params = [name, category, parseFloat(price), description, imageUrl, isFeatured === 'true', id];
         const updateResult = await query(sql, params);

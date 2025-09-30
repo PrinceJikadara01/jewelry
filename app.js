@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
     )}`;
 
     modalBody.innerHTML = `
-            <img src="${product.imageurl}" alt="${
+            <img src="${product.imageUrl}" alt="${
       product.name
     }" class="modal-image">
             <div class="modal-details">
