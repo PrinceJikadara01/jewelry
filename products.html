@@ -39,32 +39,11 @@
 
         <section class="product-gallery section">
             <div class="container">
-                <div class="filters animate-on-scroll">
-                    <div class="filter-group">
-                        <input type="search" id="product-search" placeholder="Search by name...">
-                    </div>
-                    <div class="filter-group">
-                        <select id="category-filter">
-                            <option value="all">All Categories</option>
-                            <!-- Categories will be dynamically populated -->
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <select id="sort-filter">
-                            <option value="default">Sort By</option>
-                            <option value="price-asc">Price: Low to High</option>
-                            <option value="price-desc">Price: High to Low</option>
-                            <option value="name-asc">Name: A-Z</option>
-                            <option value="name-desc">Name: Z-A</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="price-filter">Price up to: <span id="price-value"></span></label>
-                        <input type="range" id="price-filter" min="0" max="100000" step="1000">
-                    </div>
-                    <div class="filter-group">
-                        <button id="clear-filters-btn" class="btn btn-secondary">Clear Filters</button>
-                    </div>
+                <div class="product-grid-header">
+                    <button id="filter-toggle-btn" class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        <span>Filters</span>
+                    </button>
                 </div>
 
                 <div id="product-grid" class="grid grid-three-columns animate-on-scroll">
@@ -74,6 +53,49 @@
             </div>
         </section>
     </main>
+
+    <!-- Filter Sidebar -->
+    <div id="filter-overlay" class="filter-overlay"></div>
+    <aside id="filter-sidebar" class="filter-sidebar">
+        <div class="filters-header">
+            <h3>Filters</h3>
+            <button id="close-filters-btn" class="close-filters-btn">&times;</button>
+        </div>
+        <div class="filters">
+            <div class="filter-group">
+                <label for="product-search">Search</label>
+                <input type="search" id="product-search" placeholder="Search by name...">
+            </div>
+            <div class="filter-group">
+                <label for="category-filter">Category</label>
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <!-- Categories will be dynamically populated -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sort-filter">Sort By</label>
+                <select id="sort-filter">
+                    <option value="default">Sort By</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="name-asc">Name: A-Z</option>
+                    <option value="name-desc">Name: Z-A</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="price-filter">Price Range</label>
+                <input type="range" id="price-filter" min="0" max="100000" step="1000">
+                <div class="price-range-values">
+                    <span id="price-min-value">₹0</span>
+                    <span id="price-max-value">₹100,000</span>
+                </div>
+            </div>
+            <div class="filter-group">
+                <button id="clear-filters-btn" class="btn btn-secondary">Clear Filters</button>
+            </div>
+        </div>
+    </aside>
 
     <div id="quick-view-modal" class="modal">
         <div class="modal-content">
