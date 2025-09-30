@@ -1399,6 +1399,7 @@ input[type="file"]::file-selector-button:hover {
         padding: 10px 15px; /* Slightly smaller padding */
         font-size: 0.8rem; /* Slightly smaller font */
     }
+    }
 
     .product-card:hover .product-image {
         transform: none;
