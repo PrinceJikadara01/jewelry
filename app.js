@@ -164,34 +164,71 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- PRODUCT PAGE ---
   const productGrid = document.getElementById("product-grid");
   if (productGrid) {
+    const productSearch = document.getElementById("product-search");
+    const categoryFilter = document.getElementById("category-filter");
+    const sortFilter = document.getElementById("sort-filter");
+    const priceFilter = document.getElementById("price-filter");
+    const priceMinValue = document.getElementById("price-min-value");
+    const priceMaxValue = document.getElementById("price-max-value");
+    const clearFiltersBtn = document.getElementById("clear-filters-btn");
+    const filterToggleBtn = document.getElementById("filter-toggle-btn");
+    const closeFiltersBtn = document.getElementById("close-filters-btn");
+    const filterOverlay = document.getElementById("filter-overlay");
+
+    // --- Filter Sidebar Logic ---
+    const openFilterSidebar = () => {
+        document.body.classList.add('filters-open');
+    };
+
+    const closeFilterSidebar = () => {
+        document.body.classList.remove('filters-open');
+    };
+
+    filterToggleBtn.addEventListener('click', openFilterSidebar);
+    closeFiltersBtn.addEventListener('click', closeFilterSidebar);
+    filterOverlay.addEventListener('click', closeFilterSidebar);
+
     // Fetch products and initialize the page
     fetchProducts().then(() => {
+      setupPriceFilter();
       displayProducts(allProducts);
       populateCategories(allProducts);
+      handleFilters(); // Initial filter call
     });
 
-    document
-      .getElementById("product-search")
-      .addEventListener("input", handleFilters);
-    document
-      .getElementById("category-filter")
-      .addEventListener("change", handleFilters);
-    document
-      .getElementById("sort-filter")
-      .addEventListener("change", handleFilters);
+    productSearch.addEventListener("input", handleFilters);
+    categoryFilter.addEventListener("change", handleFilters);
+    sortFilter.addEventListener("change", handleFilters);
+    priceFilter.addEventListener("input", () => {
+        priceMaxValue.textContent = `₹${Number(priceFilter.value).toLocaleString()}`;
+        handleFilters();
+    });
+    clearFiltersBtn.addEventListener("click", clearFilters);
+
+    function setupPriceFilter() {
+        if (allProducts.length === 0) return;
+        const prices = allProducts.map(p => p.price);
+        const minPrice = Math.min(...prices);
+        const maxPrice = Math.max(...prices);
+
+        priceFilter.min = minPrice;
+        priceFilter.max = maxPrice;
+        priceFilter.value = maxPrice;
+        priceMinValue.textContent = `₹${Number(minPrice).toLocaleString()}`;
+        priceMaxValue.textContent = `₹${Number(maxPrice).toLocaleString()}`;
+    }
 
     function handleFilters() {
-      const searchTerm = document
-        .getElementById("product-search")
-        .value.toLowerCase();
-      const category = document.getElementById("category-filter").value;
-      const sort = document.getElementById("sort-filter").value;
+      const searchTerm = productSearch.value.toLowerCase();
+      const category = categoryFilter.value;
+      const sort = sortFilter.value;
+      const maxPrice = Number(priceFilter.value);
 
       let filteredProducts = allProducts.filter((product) => {
         const nameMatch = product.name.toLowerCase().includes(searchTerm);
-        const categoryMatch =
-          category === "all" || product.category === category;
-        return nameMatch && categoryMatch;
+        const categoryMatch = category === "all" || product.category === category;
+        const priceMatch = product.price <= maxPrice;
+        return nameMatch && categoryMatch && priceMatch;
       });
 
       switch (sort) {
@@ -210,6 +247,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       displayProducts(filteredProducts);
+    }
+
+    function clearFilters() {
+        productSearch.value = "";
+        categoryFilter.value = "all";
+        sortFilter.value = "default";
+        setupPriceFilter();
+        handleFilters();
     }
   }
 

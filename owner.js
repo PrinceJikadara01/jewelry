@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             productList.innerHTML = paginated.map(p => `
                 <tr>
-                    <td><img src="${p.imageurl}" alt="${p.name}" style="width: 50px; height: auto;"></td>
+                    <td><img src="${p.imageurl}" alt="${p.name}" style="width: 50px; height: auto;" loading="lazy"></td>
                     <td>${p.name}</td>
                     <td>${p.category}</td>
                     <td>${p.price.toLocaleString()}</td>

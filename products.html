@@ -58,6 +58,13 @@
                             <option value="name-desc">Name: Z-A</option>
                         </select>
                     </div>
+                    <div class="filter-group">
+                        <label for="price-filter">Price up to: <span id="price-value"></span></label>
+                        <input type="range" id="price-filter" min="0" max="100000" step="1000">
+                    </div>
+                    <div class="filter-group">
+                        <button id="clear-filters-btn" class="btn btn-secondary">Clear Filters</button>
+                    </div>
                 </div>
 
                 <div id="product-grid" class="grid grid-three-columns animate-on-scroll">
