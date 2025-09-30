@@ -309,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return `
             <div class="product-card" data-id="${product.id}">
                 <div class="product-image-container">
-                    <img src="${product.imageurl}" alt="${
+                    <img src="${product.imageUrl}" alt="${
       product.name
     }" class="product-image" loading="lazy">
                     <div class="wishlist-icon ${isWishlisted ? 'wishlisted' : ''}" data-product-id="${product.id}">
