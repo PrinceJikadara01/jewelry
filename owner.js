@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             subscriberList.innerHTML = subscribers.map(sub => `
                 <tr>
-                    <td>${sub.email}</td>
+                    <td><a href="mailto:${sub.email}" title="Send email to ${sub.email}">${sub.email}</a></td>
                     <td>${new Date(sub.subscribed_at).toLocaleDateString()}</td>
                 </tr>
             `).join('');
