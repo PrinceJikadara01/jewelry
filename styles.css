@@ -964,25 +964,40 @@ body.filters-open .filter-sidebar {
     margin-top: 20px;
 }
 
-.product-list-container {
+.table-container {
     overflow-x: auto;
 }
 
-#product-list {
+.data-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-#product-list th,
-#product-list td {
+.data-table thead {
+    background-color: var(--off-white-color);
+}
+
+.data-table th,
+.data-table td {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid var(--light-gray-color);
+    vertical-align: middle;
 }
 
-#product-list th {
+.data-table th {
     font-weight: 600;
+    font-family: var(--font-secondary);
+    color: var(--dark-color);
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: var(--off-white-color);
+}
+
+.data-table tbody tr:hover {
+    background-color: #f0f0f0;
 }
 
 #product-list img {
