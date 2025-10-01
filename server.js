@@ -196,7 +196,7 @@ app.delete('/api/products/:id', authenticateToken, async (req, res) => {
 // Endpoint to get all subscribers
 app.get('/api/subscribers', authenticateToken, async (req, res) => {
     try {
-        const result = await query('SELECT email, created_at FROM subscribers ORDER BY created_at DESC');
+        const result = await query('SELECT email, subscribed_at FROM subscribers ORDER BY subscribed_at DESC');
         res.json(result.rows);
     } catch (err) {
         console.error('Error retrieving subscribers:', err);

@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
             subscriberList.innerHTML = subscribers.map(sub => `
                 <tr>
                     <td>${sub.email}</td>
-                    <td>${new Date(sub.created_at).toLocaleDateString()}</td>
+                    <td>${new Date(sub.subscribed_at).toLocaleDateString()}</td>
                 </tr>
             `).join('');
 
