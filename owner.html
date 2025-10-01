@@ -72,51 +72,51 @@
                         <button id="logout-btn" class="btn btn-secondary">Logout</button>
                     </div>
 
-                    <!-- Admin Navigation -->
-                    <div class="admin-nav">
-                        <button id="show-products-btn" class="admin-nav-btn active">Products</button>
-                        <button id="show-subscribers-btn" class="admin-nav-btn">Subscribers</button>
+                    <!-- Add/Edit Product Form -->
+                    <div class="card">
+                        <h3 id="form-title">Add New Product</h3>
+                        <form id="product-form">
+                            <input type="hidden" id="product-id">
+                            <div class="form-group">
+                                <label for="product-name">Product Name</label>
+                                <input type="text" id="product-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-category">Category</label>
+                                <input type="text" id="product-category" required placeholder="e.g., Rings, Necklaces">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-price">Price (₹)</label>
+                                <input type="number" id="product-price" required min="0" step="0.01">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-image">Product Image</label>
+                                <input type="file" id="product-image" name="image" accept="image/*">
+                                <img id="image-preview" src="" alt="Image Preview" style="max-width: 100px; display: none; margin-top: 10px;">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-description">Description</label>
+                                <textarea id="product-description" rows="4" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-featured">Featured Product</label>
+                                <input type="checkbox" id="product-featured">
+                            </div>
+                            <div class="form-buttons">
+                                <button type="submit" class="btn btn-primary">Save Product</button>
+                                <button type="button" id="cancel-edit-btn" class="btn btn-secondary is-hidden">Cancel Edit</button>
+                            </div>
+                        </form>
                     </div>
 
-                    <!-- Add/Edit Product Form -->
-                    <div id="products-view">
-                        <div class="card">
-                            <h3 id="form-title">Add New Product</h3>
-                            <form id="product-form">
-                                <input type="hidden" id="product-id">
-                                <div class="form-group">
-                                    <label for="product-name">Product Name</label>
-                                    <input type="text" id="product-name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="product-category">Category</label>
-                                    <input type="text" id="product-category" required placeholder="e.g., Rings, Necklaces">
-                                </div>
-                                <div class="form-group">
-                                    <label for="product-price">Price (₹)</label>
-                                    <input type="number" id="product-price" required min="0" step="0.01">
-                                </div>
-                                <div class="form-group">
-                                    <label for="product-image">Product Image</label>
-                                    <input type="file" id="product-image" name="image" accept="image/*">
-                                    <img id="image-preview" src="" alt="Image Preview" style="max-width: 100px; display: none; margin-top: 10px;">
-                                </div>
-                                <div class="form-group">
-                                    <label for="product-description">Description</label>
-                                    <textarea id="product-description" rows="4" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="product-featured">Featured Product</label>
-                                    <input type="checkbox" id="product-featured">
-                                </div>
-                                <div class="form-buttons">
-                                    <button type="submit" class="btn btn-primary">Save Product</button>
-                                    <button type="button" id="cancel-edit-btn" class="btn btn-secondary is-hidden">Cancel Edit</button>
-                                </div>
-                            </form>
-                        </div>
-    
-                        <!-- Product List -->
+                    <!-- Admin Action Navigation -->
+                    <div class="admin-actions-nav">
+                        <button id="toggle-manage-products-btn" class="btn btn-primary">Manage Products</button>
+                        <button id="toggle-subscribers-btn" class="btn btn-secondary">View Subscribers</button>
+                    </div>
+
+                    <!-- Manage Product List -->
+                    <div id="manage-products-view" class="is-hidden">
                         <div class="card">
                             <h3>Manage Products</h3>
                             <div class="product-controls">
@@ -159,7 +159,7 @@
                     <div id="subscribers-view" class="is-hidden">
                         <div class="card">
                             <h3>Subscribers</h3>
-                            <p>View the list of users who have subscribed to your newsletter.</p>
+                            <p>List of users who have subscribed to your newsletter.</p>
                             <div id="subscriber-list-container" class="table-container" style="margin-top: 20px;">
                                 <table id="subscriber-list" class="data-table">
                                     <thead>

@@ -27,11 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const subscriberListContainer = document.getElementById('subscriber-list-container');
     const subscriberList = document.querySelector('#subscriber-list tbody');
 
-    // --- ADMIN PANEL TABS ---
-    const productsView = document.getElementById('products-view');
+    // --- TOGGLEABLE VIEWS ---
+    const manageProductsView = document.getElementById('manage-products-view');
     const subscribersView = document.getElementById('subscribers-view');
-    const showProductsBtn = document.getElementById('show-products-btn');
-    const showSubscribersBtn = document.getElementById('show-subscribers-btn');
+    const toggleManageProductsBtn = document.getElementById('toggle-manage-products-btn');
+    const toggleSubscribersBtn = document.getElementById('toggle-subscribers-btn');
     // --- STATE MANAGEMENT ---
     let allProducts = [];
     let currentPage = 1;
@@ -423,24 +423,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- ADMIN PANEL TAB LOGIC ---
-    if (showProductsBtn) {
-        showProductsBtn.addEventListener('click', () => {
-            productsView.classList.remove('is-hidden');
+    // --- ADMIN PANEL TOGGLE LOGIC ---
+    if (toggleManageProductsBtn) {
+        toggleManageProductsBtn.addEventListener('click', () => {
+            const isHidden = manageProductsView.classList.toggle('is-hidden');
+            toggleManageProductsBtn.textContent = isHidden ? 'Manage Products' : 'Hide Products';
+            // If we show products, hide subscribers to avoid overlap
             subscribersView.classList.add('is-hidden');
-            showProductsBtn.classList.add('active');
-            showSubscribersBtn.classList.remove('active');
+            toggleSubscribersBtn.textContent = 'View Subscribers';
         });
     }
-    if (showSubscribersBtn) {
-        showSubscribersBtn.addEventListener('click', () => {
-            subscribersView.classList.remove('is-hidden');
-            productsView.classList.add('is-hidden');
-            showSubscribersBtn.classList.add('active');
-            showProductsBtn.classList.remove('active');
-            fetchSubscribers(); // Fetch subscribers when tab is clicked
+    if (toggleSubscribersBtn) {
+        toggleSubscribersBtn.addEventListener('click', () => {
+            const isHidden = subscribersView.classList.toggle('is-hidden');
+            toggleSubscribersBtn.textContent = isHidden ? 'View Subscribers' : 'Hide Subscribers';
+            if (!isHidden) {
+                fetchSubscribers(); // Fetch subscribers only when showing the view
+            }
+            // If we show subscribers, hide products to avoid overlap
+            manageProductsView.classList.add('is-hidden');
+            toggleManageProductsBtn.textContent = 'Manage Products';
         });
     }
+
     // --- INITIALIZE ---
     checkAuth();
 });
