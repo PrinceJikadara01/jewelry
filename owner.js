@@ -24,10 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signup-form');
     if(signupForm) signupForm.style.display = 'none';
 
-    const viewSubscribersBtn = document.getElementById('view-subscribers-btn');
     const subscriberListContainer = document.getElementById('subscriber-list-container');
     const subscriberList = document.querySelector('#subscriber-list tbody');
 
+    // --- ADMIN PANEL TABS ---
+    const productsView = document.getElementById('products-view');
+    const subscribersView = document.getElementById('subscribers-view');
+    const showProductsBtn = document.getElementById('show-products-btn');
+    const showSubscribersBtn = document.getElementById('show-subscribers-btn');
     // --- STATE MANAGEMENT ---
     let allProducts = [];
     let currentPage = 1;
@@ -172,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- SUBSCRIBER MANAGEMENT ---
     async function fetchSubscribers() {
-        subscriberListContainer.style.display = 'block';
         subscriberList.innerHTML = '<tr><td colspan="2">Loading...</td></tr>';
 
         try {
@@ -212,19 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('category-filter').addEventListener('change', () => { currentPage = 1; handleFiltersAndPagination(); });
     document.getElementById('prev-page').addEventListener('click', () => { if(currentPage > 1) { currentPage--; handleFiltersAndPagination(); }});
     document.getElementById('next-page').addEventListener('click', () => { currentPage++; handleFiltersAndPagination(); });
-
-    if (viewSubscribersBtn) {
-        viewSubscribersBtn.addEventListener('click', () => {
-            const isVisible = subscriberListContainer.style.display === 'block';
-            if (isVisible) {
-                subscriberListContainer.style.display = 'none';
-                viewSubscribersBtn.textContent = 'View Subscribers';
-            } else {
-                fetchSubscribers();
-                viewSubscribersBtn.textContent = 'Hide Subscribers';
-            }
-        });
-    }
 
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {
@@ -433,6 +423,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- ADMIN PANEL TAB LOGIC ---
+    if (showProductsBtn) {
+        showProductsBtn.addEventListener('click', () => {
+            productsView.classList.remove('is-hidden');
+            subscribersView.classList.add('is-hidden');
+            showProductsBtn.classList.add('active');
+            showSubscribersBtn.classList.remove('active');
+        });
+    }
+    if (showSubscribersBtn) {
+        showSubscribersBtn.addEventListener('click', () => {
+            subscribersView.classList.remove('is-hidden');
+            productsView.classList.add('is-hidden');
+            showSubscribersBtn.classList.add('active');
+            showProductsBtn.classList.remove('active');
+            fetchSubscribers(); // Fetch subscribers when tab is clicked
+        });
+    }
     // --- INITIALIZE ---
     checkAuth();
 });
