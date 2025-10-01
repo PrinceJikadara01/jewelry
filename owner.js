@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(signupForm) signupForm.style.display = 'none';
 
     const viewSubscribersBtn = document.getElementById('view-subscribers-btn');
-    const subscriberListContainer = document.querySelector('.subscriber-list-container');
+    const subscriberListContainer = document.getElementById('subscriber-list-container');
     const subscriberList = document.querySelector('#subscriber-list tbody');
 
     // --- STATE MANAGEMENT ---

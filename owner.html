@@ -151,23 +151,22 @@
                     <div class="card">
                         <h3>Subscribers</h3>
                         <p>View the list of users who have subscribed to your newsletter.</p>
-                        <div class="subscriber-controls">
-                            <button id="view-subscribers-btn" class="btn btn-primary">View Subscribers</button>
-                        </div>
-                        <div class="table-container" style="display: none; margin-top: 20px;">
-                            <table id="subscriber-list" class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Email Address</th>
-                                        <th>Subscribed On</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Subscriber rows will be dynamically inserted here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                                            <div class="subscriber-controls">
+                                                <button id="view-subscribers-btn" class="btn btn-primary">View Subscribers</button>
+                                            </div>
+                                            <div id="subscriber-list-container" class="table-container" style="display: none; margin-top: 20px;">
+                                                <table id="subscriber-list" class="data-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Email Address</th>
+                                                            <th>Subscribed On</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- Subscriber rows will be dynamically inserted here -->
+                                                    </tbody>
+                                                </table>
+                                            </div>                    </div>
                 </div>
             </div>
         </section>
