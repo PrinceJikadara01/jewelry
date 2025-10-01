@@ -140,9 +140,22 @@ document.addEventListener("DOMContentLoaded", () => {
     fetchProducts().then(() => {
       const featuredProducts = allProducts.filter((p) => p.isfeatured);
       if (featuredProducts.length > 0) {
-        featuredGrid.innerHTML = featuredProducts
+        // Slice the array to only show the first 6 featured products
+        const productsToShow = featuredProducts.slice(0, 6);
+        featuredGrid.innerHTML = productsToShow
           .map((product) => createProductCard(product))
           .join("");
+
+        // If there are more than 6 featured products, add an "Explore More" button
+        if (featuredProducts.length > 6) {
+          const exploreButtonContainer = document.createElement('div');
+          exploreButtonContainer.className = 'text-center'; // Center the button
+          exploreButtonContainer.style.marginTop = '30px'; // Add some space above the button
+          exploreButtonContainer.innerHTML = `<a href="/products" class="btn btn-primary">Explore More</a>`;
+          
+          // Append the button container after the featured grid
+          featuredGrid.parentNode.insertBefore(exploreButtonContainer, featuredGrid.nextSibling);
+        }
       } else {
         featuredGrid.innerHTML =
           "<p>No featured products available at the moment.</p>";
