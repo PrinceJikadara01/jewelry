@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const signupForm = document.getElementById('signup-form');
     if(signupForm) signupForm.style.display = 'none';
 
+    const viewSubscribersBtn = document.getElementById('view-subscribers-btn');
+    const subscriberListContainer = document.querySelector('.subscriber-list-container');
+    const subscriberList = document.querySelector('#subscriber-list tbody');
+
     // --- STATE MANAGEMENT ---
     let allProducts = [];
     let currentPage = 1;
@@ -166,11 +170,61 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- SUBSCRIBER MANAGEMENT ---
+    async function fetchSubscribers() {
+        subscriberListContainer.style.display = 'block';
+        subscriberList.innerHTML = '<tr><td colspan="2">Loading...</td></tr>';
+
+        try {
+            const response = await fetch(`${API_URL}/subscribers`, {
+                headers: { 'Authorization': `Bearer ${getToken()}` }
+            });
+            if (!response.ok) {
+                if (response.status === 401 || response.status === 403) {
+                     showToast('Authentication error. Please log in again.', 5000, 'error');
+                }
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const subscribers = await response.json();
+            
+            if (subscribers.length === 0) {
+                subscriberList.innerHTML = '<tr><td colspan="2">No subscribers found.</td></tr>';
+                return;
+            }
+
+            subscriberList.innerHTML = subscribers.map(sub => `
+                <tr>
+                    <td>${sub.email}</td>
+                    <td>${new Date(sub.created_at).toLocaleDateString()}</td>
+                </tr>
+            `).join('');
+
+        } catch (error) {
+            console.error('Error fetching subscribers:', error);
+            showToast('Could not load subscribers.', 5000, 'error');
+            subscriberList.innerHTML = '<tr><td colspan="2">Error loading subscribers.</td></tr>';
+        }
+    }
+
     // --- EVENT LISTENERS ---
     document.getElementById('product-search').addEventListener('input', () => { currentPage = 1; handleFiltersAndPagination(); });
     document.getElementById('category-filter').addEventListener('change', () => { currentPage = 1; handleFiltersAndPagination(); });
     document.getElementById('prev-page').addEventListener('click', () => { if(currentPage > 1) { currentPage--; handleFiltersAndPagination(); }});
     document.getElementById('next-page').addEventListener('click', () => { currentPage++; handleFiltersAndPagination(); });
+
+    if (viewSubscribersBtn) {
+        viewSubscribersBtn.addEventListener('click', () => {
+            const isVisible = subscriberListContainer.style.display === 'block';
+            if (isVisible) {
+                subscriberListContainer.style.display = 'none';
+                viewSubscribersBtn.textContent = 'View Subscribers';
+            } else {
+                fetchSubscribers();
+                viewSubscribersBtn.textContent = 'Hide Subscribers';
+            }
+        });
+    }
 
     if (exportBtn) {
         exportBtn.addEventListener('click', () => {
@@ -374,7 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
             notification.className = 'toast-notification show';
             notification.classList.add(`toast-${type}`);
             setTimeout(() => {
-                notification.className = notification.className.replace('show', '');
+                notification.className = notification.className.replace("show", "");
             }, duration);
         }
     }

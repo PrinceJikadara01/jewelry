@@ -193,6 +193,17 @@ app.delete('/api/products/:id', authenticateToken, async (req, res) => {
     }
 });
 
+// Endpoint to get all subscribers
+app.get('/api/subscribers', authenticateToken, async (req, res) => {
+    try {
+        const result = await query('SELECT email, created_at FROM subscribers ORDER BY created_at DESC');
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error retrieving subscribers:', err);
+        res.status(500).json({ message: 'Error retrieving subscribers.', error: err.message });
+    }
+});
+
 app.post('/api/products/import', authenticateToken, async (req, res) => {
     const products = req.body;
     if (!Array.isArray(products)) {
